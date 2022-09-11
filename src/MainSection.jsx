@@ -35,6 +35,7 @@ const MainSection = () => {
 
   useEffect(() => {
     setUpGoogleAutocomplete()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
@@ -46,6 +47,7 @@ const MainSection = () => {
     if (googleResult.name) {
       checkDbForData()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [googleResult?.name])
 
   return (
