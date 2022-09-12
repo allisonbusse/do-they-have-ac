@@ -11,6 +11,7 @@ const MainSection = () => {
   const [query, setQuery] = useState("")
   const [googleResult, setGoogleResult] = useState({})
   const [dbResult, setDbResult] = useState({})
+  const [loading, setLoading] = useState(false)
   const autoCompleteRef = useRef(null)
 
   const handlePlaceSelect = async () => {
@@ -40,9 +41,13 @@ const MainSection = () => {
 
   useEffect(() => {
     const checkDbForData = async () => {
+      setLoading(true)
       fetch(`${url}?id=${googleResult.place_id}`)
         .then((res) => res.json())
-        .then((result) => setDbResult(result[0]))
+        .then((result) => {
+          setDbResult(result[0])
+          setLoading(false)
+        })
     }
     if (googleResult.name) {
       checkDbForData()
@@ -73,10 +78,10 @@ const MainSection = () => {
         <>
           <div className="flex-grow-1">
             <ShowPlaceInfo googleResult={googleResult} />
-            {(dbResult?.no > 0 || dbResult?.yes > 0) && (
+            {(dbResult?.no > 0 || dbResult?.yes > 0) && !loading && (
               <ShowACResults dbResult={dbResult} />
             )}
-            {!dbResult?.id && (
+            {!dbResult?.id && !loading && (
               <div className="mt-5">
                 We don't have any data for that place yet...
               </div>
