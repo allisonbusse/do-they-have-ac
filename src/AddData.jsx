@@ -70,7 +70,7 @@ const AddData = ({ dbResult, googleResult }) => {
                     marginRight: "16px",
                   }}
                   onClick={() => {
-                    dbResult.id
+                    dbResult?.id
                       ? addVoteToExistingPlace("yes")
                       : addNewPlace("yes")
                   }}
