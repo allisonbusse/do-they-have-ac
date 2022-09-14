@@ -45,7 +45,6 @@ const MainSection = () => {
       fetch(`${url}/${googleResult.place_id}`)
         .then((res) => res.json())
         .then((result) => {
-          console.log(result)
           if (result?._id) setDbResult(result)
           setLoading(false)
         })
