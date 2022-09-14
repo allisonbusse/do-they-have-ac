@@ -6,7 +6,7 @@ import ShowPlaceInfo from "./ShowPlaceInfo"
 let autoComplete
 
 const MainSection = () => {
-  const url = "https://do-they-have-ac-server.herokuapp.com/results"
+  const url = "https://do-they-have-ac-server.herokuapp.com/locations"
 
   const [query, setQuery] = useState("")
   const [googleResult, setGoogleResult] = useState({})
@@ -42,10 +42,11 @@ const MainSection = () => {
   useEffect(() => {
     const checkDbForData = async () => {
       setLoading(true)
-      fetch(`${url}?id=${googleResult.place_id}`)
+      fetch(`${url}/${googleResult.place_id}`)
         .then((res) => res.json())
         .then((result) => {
-          setDbResult(result[0])
+          console.log(result)
+          if (result?._id) setDbResult(result)
           setLoading(false)
         })
     }
@@ -81,7 +82,7 @@ const MainSection = () => {
             {(dbResult?.no > 0 || dbResult?.yes > 0) && !loading && (
               <ShowACResults dbResult={dbResult} />
             )}
-            {!dbResult?.id && !loading && (
+            {!dbResult?._id && !loading && (
               <div className="mt-5">
                 We don't have any data for that place yet...
               </div>
